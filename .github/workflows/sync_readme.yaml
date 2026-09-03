@@ -1,0 +1,65 @@
+name: Sync README
+on:
+  push:
+    paths:
+      - 'README.MD'
+
+jobs:
+  sycn:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      
+      - name: Setup GIT
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@koitech.com'
+
+      - name: Copy Readme to Servidor
+        run: |
+          git clone "https://${{ secrets.PAT_DISPATCH }}@github.com/Janosys-Log/Back-End.git"
+          cp README.MD ./Servidor/README.md
+
+      - name: Cria PR em Servidor
+        uses: peter-evans/create-pull-request@v8
+        with:
+          path: Servidor
+          commit-message: "docs: atualiza README automaticamente"
+          title: Atualização do README
+          body: "PR automático para atualizar o README. FONTE: `Documentos`"
+          base: main
+          branch: update/readme-servidor
+          author: "github-actions <actions@github.com>"
+          committer: "github-actions <actions@github.com>"
+          token: ${{ secrets.PAT_DISPATCH }}
+          add-paths: README.md
+          delete-branch: true
+
+      - name: Copy Readme to FrontEnd
+        run: |
+          git clone "https://${{ secrets.PAT_DISPATCH }}@github.com/Janosys-Log/Front-End.git"
+          cp README.MD ./FrontEnd/README.md
+        
+      - name: Cria PR em FrontEnd
+        uses: peter-evans/create-pull-request@v8
+        with:
+          path: FrontEnd
+          commit-message: "docs: atualiza README automaticamente"
+          title: Atualização do README
+          body: "PR automático para atualizar o README. FONTE: `Documentos`"
+          base: main
+          branch: update/readme-frontend
+          author: "github-actions <actions@github.com>"
+          committer: "github-actions <actions@github.com>"
+          token: ${{ secrets.PAT_DISPATCH }}
+          add-paths: README.md
+      
+      - name: Copy Readme to Perfil
+        run: |
+          git clone "https://${{ secrets.PAT_DISPATCH }}@github.com/Janosys-Log/.github.git" perfil
+          cp README.MD ./perfil/profile/README.md
+          cd ./perfil
+          git add profile/README.md
+          git commit -m "docs: Atualiza README.md"
+          git push
