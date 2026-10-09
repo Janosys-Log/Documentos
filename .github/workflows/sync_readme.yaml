@@ -56,11 +56,16 @@ jobs:
           add-paths: README.md
           path: Front-End
       
-      - name: Copy Readme to Perfil
+      - name: Copy Readme to .github
         run: |
           git clone "https://${{ secrets.PAT_COPY }}@github.com/Janosys-Log/.github.git" perfil
-          cp README.md ./perfil/profile/README.md
-          cd ./perfil
-          git add profile/README.md
-          git commit -m "docs: Atualiza README.md"
-          git push
+          cp README.md perfil/profile/README.md
+          cd perfil
+          git add .
+
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: Atualiza README.md"
+            git push
+          else
+            echo "README já está atualizado. Nenhuma alteração necessária."
+          fi
