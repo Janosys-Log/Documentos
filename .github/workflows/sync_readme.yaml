@@ -2,7 +2,7 @@ name: Sync README
 on:
   push:
     paths:
-      - 'README.MD'
+      - 'README.md'
 
 jobs:
   sycn:
@@ -19,7 +19,7 @@ jobs:
       - name: Copy Readme to Servidor
         run: |
           git clone "https://${{ secrets.PAT_DISPATCH }}@github.com/Janosys-Log/Back-End.git"
-          cp README.MD ./Servidor/README.md
+          cp README.md ./Back-End/README.md
 
       - name: Cria PR em Servidor
         uses: peter-evans/create-pull-request@v8
@@ -39,7 +39,7 @@ jobs:
       - name: Copy Readme to FrontEnd
         run: |
           git clone "https://${{ secrets.PAT_DISPATCH }}@github.com/Janosys-Log/Front-End.git"
-          cp README.MD ./FrontEnd/README.md
+          cp README.md ./Front-End/README.md
         
       - name: Cria PR em FrontEnd
         uses: peter-evans/create-pull-request@v8
@@ -58,7 +58,7 @@ jobs:
       - name: Copy Readme to Perfil
         run: |
           git clone "https://${{ secrets.PAT_DISPATCH }}@github.com/Janosys-Log/.github.git" perfil
-          cp README.MD ./perfil/profile/README.md
+          cp README.md ./perfil/profile/README.md
           cd ./perfil
           git add profile/README.md
           git commit -m "docs: Atualiza README.md"
