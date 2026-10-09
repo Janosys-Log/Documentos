@@ -1,7 +1,7 @@
 name: Notificar Update
-
 on:
-  push
+  workflow_dispatch:
+  push:
 
 jobs:
   notify:
