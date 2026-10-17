@@ -1,4 +1,6 @@
+
 name: Sync README
+
 on:
   workflow_dispatch:
   push:
@@ -6,12 +8,13 @@ on:
       - 'README.md'
 
 jobs:
-  sycn:
+  sync:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      
+
       - name: Setup GIT
         run: |
           git config --global user.name 'github-actions[bot]'
@@ -23,6 +26,7 @@ jobs:
           cp README.md ./Back-End/README.md
 
       - name: Cria PR em Back-End
+        id: pr_backend
         uses: peter-evans/create-pull-request@v8.1.1
         with:
           token: ${{ secrets.PAT_COPY }}
@@ -32,17 +36,39 @@ jobs:
           branch: update/back-End
           delete-branch: true
           title: Atualização do README
-          body: "PR automático para atualizar o README. FONTE: `Documentos`"
-          base: main
+          body: "PR automático para atualizar o README. FONTE: Documentos"
+          base: Staged
           add-paths: README.md
           path: Back-End
+
+      - name: Aprovar PR Back-End
+        if: |
+          steps.pr_backend.outputs.pull-request-operation == 'created' ||
+          steps.pr_backend.outputs.pull-request-operation == 'updated'
+        env:
+          GH_TOKEN: ${{ secrets.PAT_APROVE }}
+          PR_NUMBER: ${{ steps.pr_backend.outputs.pull-request-number }}
+        run: |
+          gh pr review "$PR_NUMBER" \
+            --repo Janosys-Log/Back-End \
+            --approve
+
+      - name: Auto-merge Back-End
+        if: steps.pr_backend.outputs.pull-request-number != ''
+        uses: peter-evans/enable-pull-request-automerge@v3.0.0
+        with:
+          token: ${{ secrets.PAT_COPY }}
+          repository: Janosys-Log/Back-End
+          pull-request-number: ${{ steps.pr_backend.outputs.pull-request-number }}
+          merge-method: squash
 
       - name: Copy Readme to FrontEnd
         run: |
           git clone "https://${{ secrets.PAT_COPY }}@github.com/Janosys-Log/Front-End.git"
           cp README.md ./Front-End/README.md
-        
+
       - name: Cria PR em FrontEnd
+        id: pr_frontend
         uses: peter-evans/create-pull-request@v8.1.1
         with:
           token: ${{ secrets.PAT_COPY }}
@@ -50,18 +76,41 @@ jobs:
           author: "github-actions <actions@github.com>"
           commit-message: "docs: atualiza README automaticamente"
           branch: update/readme-frontend
+          delete-branch: true
           title: Atualização do README
-          body: "PR automático para atualizar o README. FONTE: `Documentos`"
+          body: "PR automático para atualizar o README. FONTE: Documentos"
           base: main
           add-paths: README.md
           path: Front-End
-      
+
+      - name: Aprovar PR FrontEnd
+        if: |
+          steps.pr_frontend.outputs.pull-request-operation == 'created' ||
+          steps.pr_frontend.outputs.pull-request-operation == 'updated'
+        env:
+          GH_TOKEN: ${{ secrets.PAT_APROVE }}
+          PR_NUMBER: ${{ steps.pr_frontend.outputs.pull-request-number }}
+        run: |
+          gh pr review "$PR_NUMBER" \
+            --repo Janosys-Log/Front-End \
+            --approve
+
+      - name: Auto-merge FrontEnd
+        if: steps.pr_frontend.outputs.pull-request-number != ''
+        uses: peter-evans/enable-pull-request-automerge@v3.0.0
+        with:
+          token: ${{ secrets.PAT_COPY }}
+          repository: Janosys-Log/Front-End
+          pull-request-number: ${{ steps.pr_frontend.outputs.pull-request-number }}
+          merge-method: squash
+
       - name: Copy Readme to .github
         run: |
           git clone "https://${{ secrets.PAT_COPY }}@github.com/Janosys-Log/.github.git" perfil
           cp README.md perfil/profile/README.md
+
           cd perfil
-          git add .
+          git add profile/README.md
 
           if ! git diff --cached --quiet; then
             git commit -m "docs: Atualiza README.md"
