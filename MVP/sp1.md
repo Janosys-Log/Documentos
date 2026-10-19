@@ -3,13 +3,12 @@
 # Documentação (Sprint 1)
 
 <p align="center">
-      <img src="../docs/imagens/LogoJanos_vetor.png" alt="logo da Janos Logística Integrada" width="600">
+      <img src="../imagens/LogoJanos_vetor.png" alt="logo da Janos Logística Integrada" width="600">
 </p>
 
 <p align="center"> 📑 ÍNDICE </p>
 <p align="center">
   |<a href="#objetivo"> Objetivo</a> |
-  <a href="#backlog"> Backlog da Sprint 1</a> |
   <a href="#tasks"> Tasks da Sprint</a> |
   <a href="#pronto"> Definição de Pronto (Sprint 1)</a> |
   <a href="#proximos"> Próximos Passos</a> |
@@ -24,19 +23,6 @@
 Permitir ao operador logístico importar o cadastro de motoristas/veículos, consultar disponibilidade por tipo de veículo, atualizar o status de disponibilidade do agregado e registrar a avaliação do frete realizado.
 
 Isso ataca o principal problema do cliente: a falta de visibilidade centralizada sobre a disponibilidade real dos motoristas, que hoje gera contato duplicado (dois operadores ligando para o mesmo motorista ao mesmo tempo).
-
----
-
-## 📋 Backlog da Sprint 1 <a id="backlog"></a>
-
-| Rank | ID | Prioridade | Título | Estimativa | Épico |
-| :--: | :-: | :-------: | :----: | :--------: | :---: |
-| <span style="color:green">1</span> | <span style="color:green">US1 [Meta]</span> | <span style="color:green">ALTA</span> | <span style="color:green">CONSULTAR OS STATUS DOS MOTORISTAS</span> | <span style="color:green">6</span> | <span style="color:green">E1</span> |
-| 2 | US02 | MÉDIA | IMPORTAÇÃO DE MOTORISTAS/TIPO DE VEÍCULOS (.csv) | 6 | E2 |
-| 3 | US03 | MÉDIA | ALTERAR OS STATUS DOS MOTORISTAS | 5 | E1 |
-| 4 | US04 | MÉDIA | REGISTRAR NOTA+FEEDBACK | 7 | E3 |
-
-> Backlog completo do produto (todas as sprints e épicos): ver README do repositório.
 
 ---
 
@@ -102,9 +88,9 @@ Isso ataca o principal problema do cliente: a falta de visibilidade centralizada
 ## 📂 Anexos / Evidências <a id="anexos"></a>
 
 - Prints de tela / Protótipo<br><br>    
-![mvp1_print1](/docs/sp1/print-1.png)
-![mvp1_print2](/docs/sp1/print-2.png)
-![mvp1_print3](/docs/sp1/print-3.png)
+![mvp1_print1](../sp1/print-1.png)
+![mvp1_print2](../sp1/print-2.png)
+![mvp1_print3](../sp1/print-3.png)
 
 ---
 
