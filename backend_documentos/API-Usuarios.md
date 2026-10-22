@@ -1,9 +1,9 @@
-# API de Usuários (US9)
+# Serviço de Usuários (US9)
 
-**Base URL:** `http://localhost:8082/api/usuarios`
-**Autenticação:** header `Authorization: Bearer <token JWT>` (token obtido em `POST /api/auth/login`, validade de 8 h)
-**Permissão:** todas as rotas exigem perfil **GERÊNCIA**. Operacional recebe **403**.
-**Swagger:** `http://localhost:8082/swagger-ui.html`
+**Base URL:** `http://localhost:8082/api/usuarios`</br>
+**Autenticação:** header `Authorization: Bearer <token JWT>` (token obtido em `POST /api/auth/login`, validade de 8 h)</br>
+**Permissão:** todas as rotas exigem perfil **GERÊNCIA**. Operacional recebe **403**.</br>
+**Swagger:** `http://localhost:8082/swagger-ui.html`</br>
 
 ## Rotas
 
