@@ -25,7 +25,6 @@
 7. [Tabela 5: `manifesto` (Registro de Viagem / Frete)](#7-tabela-5-manifesto-registro-de-viagem--frete)
 8. [Tabela 6: `avaliacoes_frete` (Feedback e Avaliação Operacional)](#8-tabela-6-avaliacoes_frete-feedback-e-avaliação-operacional)
 9. [Dicas de Integração Frontend (React) e Boas Práticas](#9-dicas-de-integração-frontend-react-e-boas-práticas)
-10. [Registro das Correções das Tabelas](#10-registro-das-correções-das-tabelas--23102026)
 
 ---
 
@@ -318,13 +317,13 @@ Todos os endpoints da tabela pertencem a `AvaliacaoFreteController`. Os retornos
 
 | Método | Rota                   | Parâmetros / corpo                                                                | Retorno HTTP                      | Resposta / comportamento                                          |
 | :----: | :--------------------- | :-------------------------------------------------------------------------------- | :-------------------------------- | :---------------------------------------------------------------- |
-| `GET`  | `/api/avaliacoes`      | Nenhum                                                                            | `200 OK`                          | Array de `AvaliacaoResponseDTO`. Sem registros, retorna `[]`.     |
+| `GET`  | `/api/avaliacoes`      | Query obrigatória: `motoristaId` (`Long`)                                         | `200 OK` / `400 Bad Request`      | Array de `AvaliacaoResponseDTO` do motorista informado, da mais recente para a mais antiga. Sem registros, retorna `[]`. |
 | `GET`  | `/api/avaliacoes/{id}` | `id`: `Long` na URL                                                               | `200 OK` / `404 Not Found`        | Retorna `AvaliacaoResponseDTO` da avaliação identificada pelo ID. |
 | `POST` | `/api/avaliacoes`      | JSON `AvaliacaoRequestDTO`: `motoristaId`, `nota`, `numeroManifesto` e `feedback` | `201 Created` / `400 Bad Request` | Registra a avaliação e retorna `AvaliacaoResponseDTO`.            |
 
 As três rotas também podem retornar `401` por falha de autenticação. Erros internos podem resultar em `500`, sem contrato específico de corpo definido pelo handler do módulo.
 
-A listagem não implementa filtros, paginação ou ordenação explícita. Embora o repositório tenha `findByMotoristaIdOrderByDataRegistroDesc`, esse método não está exposto em uma rota ou parâmetro do controller. Não há endpoints PUT, PATCH ou DELETE neste módulo.
+A listagem exige o parâmetro `motoristaId` e ordena por `dataRegistro` decrescente, usando `findByMotoristaIdOrderByDataRegistroDesc` do repositório. Não há listagem geral sem filtro nem paginação. Não há endpoints PUT, PATCH ou DELETE neste módulo.
 
 #### Corpo de criação e validações
 
@@ -364,12 +363,12 @@ Exemplo de corpo para `POST /api/avaliacoes`:
 
 | Campo de `AvaliacaoResponseDTO` | Tipo / significado                                                          |
 | :------------------------------ | :-------------------------------------------------------------------------- |
-| `mensagem`                      | String de confirmação no POST; string vazia nos GETs.                       |
+| `mensagem`                      | String de confirmação no POST; `null` nos GETs.                             |
 | `id`                            | Número com o ID gerado para a avaliação.                                    |
 | `motoristaId`                   | Número com o ID do motorista informado.                                     |
 | `nota`                          | Número inteiro de 1 a 5.                                                    |
 | `numeroManifesto`               | Número inteiro do manifesto informado.                                      |
-| `descricaoNota`                 | Descrição da escala no POST; string vazia nos GETs.                         |
+| `descricaoNota`                 | Descrição da escala, preenchida no POST e nos GETs.                         |
 | `feedback`                      | Texto salvo, sem espaços nas extremidades.                                  |
 | `dataRegistro`                  | Data/hora local ISO, sem offset, preenchida pela entidade em `@PrePersist`. |
 
@@ -388,24 +387,24 @@ Exemplo de resposta `201 Created` do POST:
 }
 ```
 
-Nas consultas, o serviço chama `AvaliacaoResponseDTOMapper.toDTO(avaliacao, "", "")`. Portanto, o frontend deve considerar `mensagem` e `descricaoNota` vazias, mesmo quando a nota estiver preenchida.
+Nas consultas, o serviço monta o DTO com o método privado `toResponse`: `mensagem` não é preenchida e vai como `null`, e `descricaoNota` vem preenchida a partir de `EscalaNota`.
 
 Exemplo de resposta `200 OK` de `GET /api/avaliacoes/1`:
 
 ```json
 {
-  "mensagem": "",
+  "mensagem": null,
   "id": 1,
   "motoristaId": 1,
   "nota": 5,
   "numeroManifesto": 1001,
-  "descricaoNota": "",
+  "descricaoNota": "Excelente",
   "feedback": "Motorista pontual e cuidadoso com a carga.",
   "dataRegistro": "2026-10-23T14:30:00"
 }
 ```
 
-`GET /api/avaliacoes` retorna um array desses objetos. Registrar uma avaliação não recalcula nem atualiza `notaMedia` do motorista em outro serviço; o fluxo atual apenas salva a avaliação e monta o DTO de resposta.
+`GET /api/avaliacoes?motoristaId=1` retorna um array desses objetos. Registrar uma avaliação não recalcula nem atualiza `notaMedia` do motorista em outro serviço; o fluxo atual apenas salva a avaliação e monta o DTO de resposta.
 
 #### Erros tratados
 
@@ -415,8 +414,9 @@ O módulo possui formatos diferentes conforme a falha:
 | :----------------- | :----------------------------------------------------------------------------- | :------------------------------------------------------------------ |
 | `400 Bad Request`  | Falha de Bean Validation, como nota fora de 1 a 5 ou campo obrigatório ausente | `timestamp`, `status`, `error` e `fields`, com mensagens por campo. |
 | `400 Bad Request`  | `IllegalArgumentException`, incluindo validação adicional da escala no serviço | `timestamp`, `status` e `error`, sem `fields`.                      |
+| `400 Bad Request`  | Parâmetro `motoristaId` ausente ou com formato inválido na listagem            | Erro padrão do Spring; sem handler específico neste módulo.         |
 | `401 Unauthorized` | Requisição sem autenticação válida                                             | Tratado por Spring Security; não usa os DTOs de erro do controller. |
-| `404 Not Found`    | Avaliação inexistente na busca por ID                                          | `ResponseErrorDTO`, com `titulo` e `mensagem`.                      |
+| `404 Not Found`    | Avaliação inexistente na busca por ID                                          | `ResponseStatusException` tratada pelo Spring; erro padrão, sem `titulo` e `mensagem`. |
 
 Exemplo de `400 Bad Request` ao enviar `nota: 6`, com os demais campos válidos:
 
@@ -431,12 +431,14 @@ Exemplo de `400 Bad Request` ao enviar `nota: 6`, com os demais campos válidos:
 }
 ```
 
-Exemplo de `404 Not Found` para `GET /api/avaliacoes/999`, quando a avaliação não existe:
+Exemplo de `404 Not Found` para `GET /api/avaliacoes/999`, quando a avaliação não existe (formato padrão do Spring, sem handler do módulo):
 
 ```json
 {
-  "titulo": "Não foi possivel encontrar a avaliação: 999",
-  "mensagem": "Não foi possível retornar avaliação"
+  "timestamp": "2026-10-23T14:30:00.000+00:00",
+  "status": 404,
+  "error": "Not Found",
+  "path": "/api/avaliacoes/999"
 }
 ```
 
@@ -1012,7 +1014,7 @@ A escala é de 1 a 5: Péssimo, Ruim, Regular, Bom e Excelente. Não existem os 
 }
 ```
 
-Nos GETs, `mensagem` e `descricaoNota` são strings vazias no mapper atual; os demais campos mantêm o formato acima.
+Nos GETs, `mensagem` é `null` e `descricaoNota` vem preenchida; os demais campos mantêm o formato acima.
 
 ---
 
