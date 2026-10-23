@@ -22,12 +22,12 @@ Janosys-Log/
 └── Back-End/      # Java + Spring Boot, com módulos e microserviços
 ```
 
-| Repositório | Responsabilidade principal | Workflows informados |
-| --- | --- | --- |
-| `.github` | Perfil público da organização e arquivos de configuração organizacional | `update_submodule` |
-| `Documentos` | Fonte central da documentação compartilhada e do README | `notify`, `sync_readme` |
-| `Front-End` | Aplicação web desenvolvida com React e Vite | `update_submodule` |
-| `Back-End` | Serviços de backend Java/Spring Boot, organizados com Maven Multi-Module | `update_submodule` |
+| Repositório  | Responsabilidade principal                                               | Workflows informados    |
+| ------------ | ------------------------------------------------------------------------ | ----------------------- |
+| `.github`    | Perfil público da organização e arquivos de configuração organizacional  | `update_submodule`      |
+| `Documentos` | Fonte central da documentação compartilhada e do README                  | `notify`, `sync_readme` |
+| `Front-End`  | Aplicação web desenvolvida com React e Vite                              | `update_submodule`      |
+| `Back-End`   | Serviços de backend Java/Spring Boot, organizados com Maven Multi-Module | `update_submodule`      |
 
 > **Convenção de nomes:** os exemplos de caminhos mantêm a capitalização presente nos workflows: `Janosys-Log/Documentos`, `Janosys-Log/Front-End` e `Janosys-Log/Back-End`. O diretório do submódulo nos consumidores é `Documentos`.
 
@@ -137,6 +137,8 @@ Um **submódulo Git** é uma referência a um commit específico de outro reposi
 
 ### 4.1 Workflow `notify` — repositório `Documentos`
 
+**Objetivo:** toda atualização no repositório `Documentos` deve acionar um gatilho nos demais repositórios, para que cada um atualize seu submódulo, assim nenhum repositório terá um histórico de documentação atrasada
+
 **Gatilhos observados:** `push` (sem filtro de branch ou caminhos no arquivo fornecido) e `workflow_dispatch`.
 
 **Comportamento atual:**
@@ -151,6 +153,8 @@ Um **submódulo Git** é uma referência a um commit específico de outro reposi
 
 ### 4.2 Workflow `update_submodule` — repositórios consumidores
 
+**Objetivo:** recebe o gatilho enviado pelo `Documentos`.`notify` e atualiza automaticamente o repositório, respeitando a criação de PRs para merge de outras branchs
+
 **Gatilho observado:** evento `repository_dispatch`, filtrado para o tipo `update_submodule`.
 
 **Comportamento atual:**
@@ -163,19 +167,19 @@ Um **submódulo Git** é uma referência a um commit específico de outro reposi
 
 O workflow declara `contents: write` e `pull-requests: write` e usa o secret `PAT_DISPATCH` para operações autenticadas.
 
-**Atenção:** `git submodule update --remote`, sem selecionar um caminho, pode atualizar **todos** os submódulos configurados no repositório. Como somente `Documentos` é adicionado ao PR, recomenda-se restringir explicitamente o comando a `git submodule update --remote Documentos` quando essa for a intenção.
-
 ### 4.3 Workflow `sync_readme` — repositório `Documentos`
+
+**Objetivo:** Toda atualização do README principal(Documentos) deve ser alterar os READMES dos demais repositórios, assim nenhum repositório terá um README desatualizado
 
 **Gatilhos observados:** alteração em `README.md` por `push`, sem filtro de branch no arquivo, ou execução manual por `workflow_dispatch`.
 
 O README da origem é distribuído de modo diferente a cada destino:
 
-| Destino | Arquivo de destino | Operação observada |
-| --- | --- | --- |
-| `Back-End` | `README.md` na raiz | Clone, cópia do arquivo e criação/atualização de PR para `main` |
-| `Front-End` | `README.md` na raiz | Clone, cópia do arquivo e criação/atualização de PR para `main` |
-| `.github` | `profile/README.md` | Clone, cópia, commit e `git push` diretamente na branch atualmente checada |
+| Destino     | Arquivo de destino  | Operação observada                                                         |
+| ----------- | ------------------- | -------------------------------------------------------------------------- |
+| `Back-End`  | `README.md` na raiz | Clone, cópia do arquivo e criação/atualização de PR para `main`            |
+| `Front-End` | `README.md` na raiz | Clone, cópia do arquivo e criação/atualização de PR para `main`            |
+| `.github`   | `profile/README.md` | Clone, cópia, commit e `git push` diretamente na branch atualmente checada |
 
 Para `Back-End`, o PR utiliza a branch `update/back-End`; para `Front-End`, `update/readme-frontend`. A automação usa `PAT_COPY` para operações de escrita.
 
@@ -209,9 +213,9 @@ flowchart LR
 
 > Como `notify` não filtra a branch, pushes em branches de trabalho de `Documentos` também podem disparar a notificação. O fluxo de exemplo acima assume a integração pela `main`, mas o arquivo atual não restringe o gatilho a ela.
 
-## 6. Estratégia de branches — GitHub Flow
+## 6. Estratégia de branches — GitHub Flow Personalizada
 
-A organização utiliza **GitHub Flow**: uma branch principal estável (`main`), branches curtas de trabalho e integração por Pull Request.
+A organização utiliza **GitHub Flow Personalizado**: uma branch de produção estável (`main`), uma branch de desenvolvimento e testes (`staged`), branches curtas de trabalho e integração por Pull Request.
 
 ```mermaid
 flowchart LR
@@ -223,16 +227,16 @@ flowchart LR
     G --> M2[main atualizada]
 ```
 
-### 6.1 Convenções de branches (sugestões)
+### 6.1 Convenções de branches
 
-| Prefixo | Finalidade | Exemplo |
-| --- | --- | --- |
-| `feature/` | Nova funcionalidade | `feature/login` |
-| `fix/` | Correção de erro | `fix/token-expirado` |
-| `docs/` | Documentação | `docs/arquitetura` |
-| `refactor/` | Refatoração | `refactor/user-service` |
-| `chore/` | Manutenção | `chore/dependencias` |
-| `update/` | Automatizações e atualizações | `update/submodule` |
+| Prefixo     | Finalidade                    | Exemplo                 |
+| ----------- | ----------------------------- | ----------------------- |
+| `feature/`  | Nova funcionalidade           | `feature/login`         |
+| `fix/`      | Correção de erro              | `fix/token-expirado`    |
+| `docs/`     | Documentação                  | `docs/arquitetura`      |
+| `refactor/` | Refatoração                   | `refactor/user-service` |
+| `chore/`    | Manutenção                    | `chore/dependencias`    |
+| `update/`   | Automatizações e atualizações | `update/submodule`      |
 
 Esses prefixos são convenções propostas; não são regras verificadas nos repositórios.
 
@@ -240,20 +244,22 @@ Esses prefixos são convenções propostas; não são regras verificadas nos rep
 
 **Nenhuma feature deve ser integrada diretamente à `main`.** O procedimento exigido pela organização é:
 
-1. Criar uma branch de trabalho a partir da `main` atualizada.
+1. Criar uma branch de trabalho a partir da `staged` atualizada.
 2. Desenvolver a alteração e publicar os commits na branch.
-3. Abrir Pull Request com destino à `main`.
+3. Abrir Pull Request com destino à `staged`.
 4. Designar ao menos um revisor responsável.
 5. Obter revisão e aprovação antes do merge.
 6. Resolver apontamentos e conflitos antes da integração.
 7. Realizar o merge apenas após a aprovação.
 8. Excluir a branch de trabalho após o merge, quando não for mais necessária.
+9. Ao final da sprint, após todas as features serem testadas e aprovadas, será aberto um Pull Request com destino à `main`
+10. Esse Pull Request deve também passar por aprovação
 
-**Aplicação da mesma política às automações:** PRs criados por `update_submodule` e `sync_readme` também precisam passar por revisão antes de integrar a `main`.
+**Aplicação da mesma política às automações:** PRs criados por `update_submodule` e `sync_readme` também precisam passar por revisão antes de integrar a `staged`.
 
-### 6.3 Proteções de branch recomendadas
+### 6.3 Proteções de branch
 
-Para efetivar as regras no GitHub, recomenda-se configurar uma ruleset ou proteção da `main` em **cada um dos quatro repositórios**, com:
+Para efetivar as regras no GitHub, existe uma ruleset ou proteção da `main` em **cada um dos quatro repositórios**, com:
 
 - Obrigatoriedade de Pull Request antes de merge.
 - Mínimo de **1 aprovação** por revisor autorizado.
@@ -261,32 +267,3 @@ Para efetivar as regras no GitHub, recomenda-se configurar uma ruleset ou prote�
 - Bloqueio de merge com conversas de revisão pendentes.
 - Verificações de CI obrigatórias, quando configuradas.
 - Restrição ou proibição de bypass para assegurar o processo de revisão.
-
-As proteções são **recomendações de configuração**: não é possível confirmar pelas definições YAML fornecidas que estejam atualmente habilitadas.
-
-## 7. Controle de integração e CI/CD
-
-Os workflows descritos automatizam a sincronização de documentação e submódulos. **Eles não demonstram, por si só, pipelines de build, teste, publicação ou deploy** das aplicações React/Vite e Spring Boot.
-
-Para complementar a arquitetura, recomenda-se:
-
-- **Front-End:** executar instalação de dependências, lint, testes e build Vite nos PRs.
-- **Back-End:** executar testes Maven, análise estática e build apenas dos módulos afetados, considerando também bibliotecas compartilhadas.
-- **Documentos:** validar links, formato Markdown e consistência de referências antes do merge, conforme ferramentas adotadas.
-- **`.github`:** revisar alterações no perfil e nos arquivos organizacionais.
-- **Deploy:** manter publicação independente para Front-End e para cada microserviço do Back-End.
-
-Os detalhes de hospedagem, banco de dados, mensageria, contratos de API, testes e deploy ainda precisam ser especificados.
-
-
-## 9. Resumo das decisões arquiteturais
-
-- **Estratégia de código-fonte:** múltiplos repositórios sob a organização `Janosys-Log`.
-- **Repositórios:** `.github`, `Documentos`, `Front-End`, `Back-End`.
-- **Front-End:** React com Vite.
-- **Back-End:** Java com Spring Boot; microserviços organizados como módulos Maven em um único repositório de backend.
-- **Documentação:** repositório `Documentos` como referência compartilhada, consumida por submódulos e sincronização do README.
-- **Sincronização:** eventos `repository_dispatch`, workflow `update_submodule` e workflow `sync_readme`.
-- **Branches:** GitHub Flow com `main` como branch de integração.
-- **Governança:** todo merge de feature para a `main` exige Pull Request e aprovação por revisor.
-- **Ajuste prioritário:** remover o push direto do `sync_readme` para `.github` e adequar os gatilhos à política de integração.
