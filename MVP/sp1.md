@@ -1,6 +1,6 @@
 # 📌 MVP - API 3º sem. DSM 2026/2
 
-# Documentação (Sprint 1)
+# Documentação (Sprint I)
 
 <p align="center">
       <img src="../imagens/LogoJanos_vetor.png" alt="logo da Janos Logística Integrada" width="600">
@@ -10,7 +10,7 @@
 <p align="center">
   |<a href="#objetivo"> Objetivo</a> |
   <a href="#tasks"> Tasks da Sprint</a> |
-  <a href="#pronto"> Definição de Pronto (Sprint 1)</a> |
+  <a href="#pronto"> Definição de Pronto (Sprint I)</a> |
   <a href="#proximos"> Próximos Passos</a> |
   <a href="#anexos"> Anexos</a> |
   <a href="#referencias"> Referências</a> |
@@ -18,7 +18,7 @@
 
 ---
 
-## 🎯 Objetivo (Sprint 1 — 07/09 a 25/09/2026) <a id="objetivo"></a>
+## 🎯 Objetivo (Sprint I — 07/09 a 25/09/2026) <a id="objetivo"></a>
 
 Permitir ao operador logístico importar o cadastro de motoristas/veículos, consultar disponibilidade por tipo de veículo, atualizar o status de disponibilidade do agregado e registrar a avaliação do frete realizado.
 
