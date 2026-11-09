@@ -28,18 +28,20 @@
 
 # 🚚 Plataforma de Gestão e Gamificação de Motoristas
 
-Este projeto consiste no desenvolvimento de uma plataforma web responsiva para o controle dinâmico de disponibilidade de motoristas, integrada a um dashboard com gamificação de desempenho para motoristas agregados.O sistema visa otimizar a rotina operacional, permitindo a filtragem e a busca rápida por profissionais disponíveis. O principal objetivo é evitar a duplicidade de busca e de contato por parte dos operadores logísticos ao mesmo motorista.
+Este projeto consiste no desenvolvimento de uma plataforma web responsiva para o controle dinâmico de disponibilidade de motoristas, integrada a um dashboard com gamificação de desempenho para motoristas agregados. O sistema visa otimizar a rotina operacional, permitindo a filtragem e a busca rápida por profissionais disponíveis. O principal objetivo é evitar a duplicidade de busca e de contato por parte dos operadores logísticos ao mesmo motorista.
 
 # ✨ Funcionalidades Principais
 
 **Controle de Acesso:** Plataforma estruturada com diferentes níveis de permissão;<br>
 **Monitoramento de Desempenho:** Visualização de notas e feedbacks dos fretes realizados por motorista;<br>
-**Análise Financeira e Operacional:** Acompanhamento da rentabilidade do frete e da média de utilização de cada motorista;<br>
-**Busca Inteligente:** Filtros rápidos para localização de motoristas disponíveis em tempo real.
+**Análise Financeira e Operacional:** Acompanhamento da rentabilidade do frete;<br>
+**Busca Inteligente:** Filtros rápidos para localização de motoristas disponíveis em tempo real;<br>
+**Controle de Rota:** Dashboard com painel de motoristas "Em Rota" para acompanhamento integral da frota em atividade;<br>
+**Controle de Rentabilidade:** Ranking mensal de rentabilidade média por motorista, com custo operacional do mês, melhor e pior manifesto, e página dos motoristas com rentabilidade negativa trazendo todos os manifestos realizados no mês.
 
 # 🏛️ Sobre o Projeto
 
-Projeto idealizado pela FATEC · SJC em conjunto com seus alunos, tendo como parceiro externo, no papel do cliente, uma grande empresa de logística integrada da região do Vale do Paraíba, que conta com mais de 30 anos de solidez no mercado. no mercado.
+Projeto idealizado pela **FATEC · SJC** em conjunto com seus alunos, tendo como parceiro externo, no papel do cliente, uma grande empresa de logística integrada da região do Vale do Paraíba, que conta com mais de 30 anos de solidez no mercado.
 
 ---
 
@@ -112,27 +114,28 @@ Projeto idealizado pela FATEC · SJC em conjunto com seus alunos, tendo como par
 ---
 
 ## 📋 Backlog do Produto <a id="backlog"></a>
-versão v.10
+versão v.13
 
-| Rank | Título | Prioridade | User Stories | Estimativa | Sprint | Épico |
-|:--:|:---:|:---:|---|:---:|:---:|:---:|
-| 🟢 **1** | **Consultar status dos motoristas** | **Alta (MVP)** | **Como operador logístico, quero consultar o status de disponibilidade dos motoristas por tipo de veículo para uma determinada rota, para contatar diretamente apenas os que constam como disponíveis, evitando ligações aos que já estão como status indisponível em rota ou indisponíveis.** | **6** | **1** | **E1** |
-| 2 | Importar motoristas e tipos de veículos (.csv) | Média | Como operador logístico, quero importar o cadastro de veículos .csv (motorista /veículo), para que eu possa localizar e vincular um motorista à uma operação; | 6 | 1 | E2 |
-| 3 | Alterar status dos motoristas | Média | Como operador logístico, quero modificar o status de disponibilidade do agregado para Disponível, Em Rota ou Indisponível, para que outros operadores não precisem confirmar novamente sua disponibilidade. | 5 | 1 | E1 |
-| 4 | Registrar nota e feedback | Média | Como operador logístico, quero registrar uma avaliação do frete realizado, composta por nota e observação, para contribuir com a gamificação e o ranking de avaliação dos motoristas. | 7 | 1 | E3 |
-| 5 | Registrar manifesto na rota | Baixa | Como operador logístico, quero registrar o número do manifesto como item obrigatório no ato do encerramento do frete, para identificação da rota realizada, melhor auxiliando a análise do gerente operacional. | 3 | 2 | E1 |
-| 6 | Organizar fila de espera | Alta | Como operador logístico, quero que a lista de disponibilidade seja ordenada automaticamente em 4 blocos por status sequenciado por Disponível/Em Rota/Indisponível/Indesejado, onde cada bloco, os motoristas apareçam ordenados pelo manifesto mais antigo e que o status Indisponível seja revisado para uma atualização automática retornando ao status Disponível quando transcorridos 3 dias, para priorizar o contato com quem está esperando há mais tempo e dar maior rotatividade aos motoristas da fila. | 4 | 2 | E4 (E1) |
-| 7 | Acessar o sistema por tipo de usuário | Média | Como usuário do sistema, quero acessar a plataforma com login autenticado via token JWT, com meu perfil (Operacional ou Gerência) embutido no token e com validade, para que minhas ações sejam autorizadas de acordo com as permissões do meu papel em cada requisição. | 6 | 2 | E5 |
-| 8 | Criar navbar de navegação | Média | Como usuário do sistema, quero navegar pela plataforma através de uma navbar,  com abas de Dashboard/Motoristas/Upload/Usuários, sendo a aba Usuários restrita ao perfil Gerência, para acessar rapidamente as áreas do sistema sem depender de menus adicionais ou restruturação do layout já existente. | 5 | 2 | E5 |
-| 9 | Gerenciar usuários | Média | Como gerente operacional, quero gerenciar o cadastro de usuários do sistema – criar, editar e desativar registros com Nome/E-mail/Senha/Usuário, sendo o perfil GERÊNCIA (Gerente Operacional | Líder) e perfil OPERACIONAL (Operador Logístico | SAC), para garantir que cada pessoa tenha o nível de acesso adequado à sua função. | 6 | 2 | E5 |
-| 10 | Importar manifesto (.csv) | Média | Como usuário, quero importar mensalmente os arquivos de .csv do ”Manifesto” (MDF-e) e de “Veículos”, através da aba “Upload” do navbar, com dois campos independentes de arrastar/soltar, cada um exibindo a data da última inserção realizada, para evitar que o sistema fique desatualizado e permitir identificar rapidamente quando foi feita a última importação de cada arquivo. | 7 | 2 | E4 |
-| 11 | Filtrar por categoria de veículos | Média | Como operador logístico, quero filtrar a lista de motoristas pela categoria e subcategoria de veículos, combinado com o filtro de status já existente na tela, para escolher com agilidade qual motorista pode atender a uma rota específica. | 6 | 2 | E2 |
-| 12 | Registrar manifesto no início da rota | Baixa | Como operador logístico, quero registrar o número do manifesto como item obrigatório no ato da solicitação do serviço ao motorista, para que possa melhor rastreá-lo e acompanhar os motoristas em rota; | 4 | 3 | E1 |
-| 13 | Dashboard de rentabilidade | Alta | Como gerente operacional, quero visualizar no dashboard um card com os 3 melhores e os 3 piores motoristas do mês por Rentabilidade Média (rentabilidade total ÷ número de manifestos) e abrir o ranking completo em um modal, com filtro por tipo de veículo e com a pontuação geral ou a específica da rota Grande SP (manifestos com destino em São Paulo, Santo André, São Bernardo do Campo, São Caetano, Diadema ou Guarulhos), para uma maior assertividade nas decisões das gratificações; | 8 | 3 | E3 (E6) |
-| 14 | Dashboard de frequência de utilização | Alta | Como gerente operacional, quero visualizar um dashboard com ranking de motoristas por Frequência de utilização, com filtro por tipo de veículo e com pontuação geral e específica da rota Grande SP, para uma maior assertividade nas decisões das gratificações; | 8 | 3 | E3 (E6) |
-| 15 | Exportar rankings | Baixa | Como gerente operacional, quero exportar o ranking mensal de rentabilidade/utilização e de avaliação, para que possa gerar relatórios internos e analisar o uso da frota; | 5 | 3 | E4 |
-| 16 | Dashboard gerência | Média | Como gerente operacional, quero visualizar um dashboard com painéis de dados operacionais de "Motoristas Em Rota", mostrando a quantidade total e a lista com os nomes desses motoristas e "Motoristas Indesejados", mostrando a quantidade total, a lista com os nomes e, ao lado de cada nome, a quantidade de dias que aquele motorista está nesse status. E ainda com a opção de abrir um modal para poder atualizar seu status, para ter uma visão rápida da operação diária sem precisar abrir a lista completa de motoristas; | 6 | 3 | E6 |
-| 16 | Dashboard operacional | Média | Como operador logístico, quero visualizar um dashboard com dados operacionais de “Motoristas em Rota”, mostrando a quantidade total e a lista com os nomes desses motoristas, com a opção de abrir um modal para poder atualizar seu status, para ter uma visão rápida da operação diária sem precisar abrir a lista completa de motoristas; | 6 | 3 | E6 |
+| Rank | Prioridade | User Stories | Estimativa | Sprint | Épico |
+|:--:|:---:|---|:---:|:---:|:---:|
+| 🟢 **1** | **Alta (MVP)** | **Como operador logístico, quero consultar o status de disponibilidade dos motoristas por tipo de veículo para uma determinada rota, para contatar diretamente apenas os que constam como disponíveis, evitando ligações aos que já estão como status indisponível em rota ou indisponíveis.** | **6** | **1** | **E1** |
+| 2 | Média | Como operador logístico, quero importar o cadastro de veículos .csv (motorista /veículo), para que eu possa localizar e vincular um motorista à uma operação; | 6 | 1 | E2 |
+| 3 | Média | Como operador logístico, quero modificar o status de disponibilidade do agregado para Disponível, Em Rota ou Indisponível, para que outros operadores não precisem confirmar novamente sua disponibilidade. | 5 | 1 | E1 |
+| 4 | Média | Como operador logístico, quero registrar uma avaliação do frete realizado, composta por nota e observação, para contribuir com a gamificação e o ranking de avaliação dos motoristas. | 7 | 1 | E3 |
+| 5 | Baixa | Como operador logístico, quero registrar o número do manifesto como item obrigatório no ato do encerramento do frete, para identificação da rota realizada, melhor auxiliando a análise do gerente operacional. | 3 | 2 | E1 |
+| 6 | Alta | Como operador logístico, quero que a lista de disponibilidade seja ordenada automaticamente em 4 blocos por status sequenciado por Disponível/Em Rota/Indisponível/Indesejado, onde cada bloco, os motoristas apareçam ordenados pelo manifesto mais antigo e que o status Indisponível seja revisado para uma atualização automática retornando ao status Disponível quando transcorridos 3 dias, para priorizar o contato com quem está esperando há mais tempo e dar maior rotatividade aos motoristas da fila. | 4 | 2 | E4 (E1) |
+| 7 | Média | Como usuário do sistema, quero acessar a plataforma com login autenticado via token JWT, com meu perfil (Operacional ou Gerência) embutido no token e com validade, para que minhas ações sejam autorizadas de acordo com as permissões do meu papel em cada requisição. | 6 | 2 | E5 |
+| 8 | Média | Como usuário do sistema, quero navegar pela plataforma através de uma navbar,  com abas de Dashboard/Motoristas/Upload/Usuários, sendo a aba Usuários restrita ao perfil Gerência, para acessar rapidamente as áreas do sistema sem depender de menus adicionais ou restruturação do layout já existente. | 5 | 2 | E5 |
+| 9 | Média | Como gerente operacional, quero gerenciar o cadastro de usuários do sistema – criar, editar e desativar registros com Nome/E-mail/Senha/Usuário, sendo o perfil GERÊNCIA (Gerente Operacional / Líder) e perfil OPERACIONAL (Operador Logístico / SAC), para garantir que cada pessoa tenha o nível de acesso adequado à sua função. | 6 | 2 | E5 |
+| 10 | Média | Como usuário, quero importar mensalmente os arquivos de .csv do ”Manifesto” (MDF-e) e de “Veículos”, através da aba “Upload” do navbar, com dois campos independentes de arrastar/soltar, cada um exibindo a data da última inserção realizada, para evitar que o sistema fique desatualizado e permitir identificar rapidamente quando foi feita a última importação de cada arquivo. | 7 | 2 | E4 |
+| 11 | Média | Como operador logístico, quero filtrar a lista de motoristas pela categoria e subcategoria de veículos, combinado com o filtro de status já existente na tela, para escolher com agilidade qual motorista pode atender a uma rota específica. | 6 | 2 | E2 |
+| 12 | Média | Como operador logístico, quero registrar o número do manifesto como item obrigatório no ato da solicitação do serviço ao motorista, isto é, ao alterar o status dele de Disponível para “Em Rota”, para acompanhar e rastrear os motoristas em rota. | 4 | 3 | E1 |
+| 13 | Média | Como gerente operacional, quero visualizar no dashboard um card com os 3 melhores e os 3 piores motoristas do mês por Rentabilidade Média (rentabilidade total ÷ número de manifestos), com a variação contra o mês anterior, alternando entre a pontuação geral e a específica da rota Grande SP (manifestos com destino em São Paulo, Santo André, São Bernardo do Campo, São Caetano, Diadema ou Guarulhos), e um gráfico da média da frota dos últimos 6 meses, para uma maior assertividade nas decisões das gratificações. | 7 | 3 | E3 (E6) |
+| 14 | Média | Como gerente operacional, quero abrir, a partir do card de rentabilidade, um modal com o ranking completo dos motoristas por Rentabilidade Média, com tabela ordenável, filtro por tipo de veículo e por faixa de Rentabilidade Média, busca por motorista, cores de apoio, acesso à página de motoristas com Rentabilidade Média negativa e três gráficos (motoristas por faixa de R$ 500, subcategorias mais usadas e Grande SP × demais destinos), alternando entre a pontuação geral e a da rota Grande SP, para analisar a distribuição da rentabilidade e decidir as gratificações com mais assertividade. | 8 | 3 | E3 (E6) |
+| 15 | Média | Como gerente operacional, quero abrir, a partir do modal do ranking de rentabilidade, uma página com os motoristas de Rentabilidade Média negativa no mês e, para cada um, os manifestos do mês com a rentabilidade de cada manifesto, para identificar se o resultado negativo veio de um frete específico ou de um conjunto de fretes. | 6 | 3 | E3 (E6) |
+| 16 | Baixa | Como gerente operacional, quero visualizar no dashboard os painéis Motoristas “Em Rota” (total e nomes, com o número do manifesto) e Motoristas Indesejados (total e nomes, com a data e os dias no status), e encerrar o frete de um motoristas “Em Rota” e reverter um motorista “Indesejado”, a partir de seus painéis, para acompanhar a operação em andamento e agir sobre os motoristas sem sair do dashboard. | 6 | 3 | E6 |
+| 17 | Baixa | CComo gerente operacional, quero visualizar no dashboard um card com o custo operacional do mês (total e custo médio por manifesto, com a variação contra o mês anterior) e dois cards com o manifesto de melhor e o de pior rentabilidade total do mês, para acompanhar o custo da operação e identificar rapidamente os fretes que mais e menos renderam. | 3 | 3 | E3 (E6) |
+| 18 | Baixa | Como operador logístico, quero visualizar no dashboard o painel “Motoristas Em Rota” (total e nomes, com o número do manifesto) e atualizar o status de um motorista por um modal aberto a partir do painel, para acompanhar os motoristas em atuação e agir sobre eles sem sair do dashboard. | 5 | 3 | E6 |
 
 <sub>**Legenda [ÉPICOS]:**<br>
 • **E1:** Disponibilidade Operacional<br>
@@ -147,12 +150,12 @@ versão v.10
 
 # Registro das Sprints <a id="sprints"></a>
 
-|      Sprint       |  Previsão  |       Status       |                                        Histórico                                         |
-| :---------------: | :--------: | :----------------: | :-------------------------------------------------------------------------------------:  |
-|        01         | 25/09/2026 |     Concluído      | [Sprint Backlog - MVPI](https://github.com/Janosys-Log/Documentos/blob/main/MVP/sp1.md)  |
-|        02         | 23/10/2026 |     Concluído      | [Sprint Backlog - MVPII](https://github.com/Janosys-Log/Documentos/blob/main/MVP/sp2.md) |
-|        03         | 20/11/2026 | Em Desenvolvimento |                                          ----                                            |
-| Feira de Soluções | 03/12/2026 |     planejado      |                                          ----                                            |
+|      Sprint       |  Previsão  |       Status       |                                        Histórico                                          |
+| :---------------: | :--------: | :----------------: | :-------------------------------------------------------------------------------------:   |
+|        01         | 25/09/2026 |     Concluído      | [Sprint Backlog - MVPI](https://github.com/Janosys-Log/Documentos/blob/main/MVP/sp1.md)   |
+|        02         | 23/10/2026 |     Concluído      | [Sprint Backlog - MVPII](https://github.com/Janosys-Log/Documentos/blob/main/MVP/sp2.md)  |
+|        03         | 20/11/2026 |     Em Andamento      | ---- |
+| Feira de Soluções | 03/12/2026 |     Planejado      |                                          ----                                             |
 
 ---
 
