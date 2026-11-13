@@ -37,7 +37,7 @@ jobs:
           delete-branch: true
           title: Atualização do README
           body: "PR automático para atualizar o README. FONTE: Documentos"
-          base: Staged
+          base: main
           add-paths: README.md
           path: Back-End
 
