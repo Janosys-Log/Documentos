@@ -113,28 +113,28 @@ Isso aproxima a plataforma do objetivo do cliente de acompanhar a rentabilidade 
 - Prints de tela / Protótipo<br><br>  
 
 - **DASHBOARD DA GERÊNCIA · PAINÉIS EM ROTA E INDESEJADOS**
-
+![mvp3_print1](../sp3/print-1.jpeg)
 
 - **MODAL "COLOCAR MOTORISTA EM ROTA" (NÚMERO DO MANIFESTO)**
-
+![mvp3_print2](../sp3/print-2.jpeg)
 
 - **CARD DE RENTABILIDADE**
-
+![mvp3_print3](../sp3/print-3.jpeg)
 
 - **MODAL DO RANKING DE RENTABILIDADE**
-
+![mvp3_print4](../sp3/print-4.jpeg)
 
 - **PÁGINA DE MOTORISTAS COM RENTABILIDADE NEGATIVA E MODAL DOS MANIFESTOS**
-
+![mvp3_print5](../sp3/print-5.jpeg)
 
 - **MODAL DE REVERSÃO DE INDESEJADO**
-
+![mvp3_print6](../sp3/print-6.jpeg)
 
 - **CARDS DE CUSTO OPERACIONAL E DE MELHOR E PIOR MANIFESTO**
-
+![mvp3_print7](../sp3/print-7.jpeg)
 
 - **DASHBOARD DO OPERADOR**
-
+![mvp3_print8](../sp3/print-8.jpeg)
 
 ---
 
