@@ -1,5 +1,5 @@
 <p align="center">
-      <img src="https://github.com/Janosys-Log/Documentos/blob/main/imagens/LogoJanos_vetor.png?raw=true" alt="logo da Janos Logística Integrada" width="600">
+      <img src="https://github.com/Janosys-Log/Documentos/blob/main/interno/imagens/LogoJanos_vetor.png?raw=true" alt="logo da Janos Logística Integrada" width="600">
 </p>
 
 ---
@@ -152,9 +152,9 @@ versão v.13
 
 |      Sprint       |  Previsão  |       Status       |                                        Histórico                                          |
 | :---------------: | :--------: | :----------------: | :-------------------------------------------------------------------------------------:   |
-|        01         | 25/09/2026 |     Concluído      | [Sprint Backlog - MVPI](https://github.com/Janosys-Log/Documentos/blob/main/MVP/sp1.md)   |
-|        02         | 23/10/2026 |     Concluído      | [Sprint Backlog - MVPII](https://github.com/Janosys-Log/Documentos/blob/main/MVP/sp2.md)  |
-|        03         | 20/11/2026 |     Concluído      | [Sprint Backlog - MVPIII](https://github.com/Janosys-Log/Documentos/blob/main/MVP/sp3.md)  |
+|        01         | 25/09/2026 |     Concluído      | [Sprint Backlog - MVPI](https://github.com/Janosys-Log/Documentos/blob/main/interno/MVP/sp1.md)   |
+|        02         | 23/10/2026 |     Concluído      | [Sprint Backlog - MVPII](https://github.com/Janosys-Log/Documentos/blob/main/interno/MVP/sp2.md)  |
+|        03         | 20/11/2026 |     Concluído      | [Sprint Backlog - MVPIII](https://github.com/Janosys-Log/Documentos/blob/main/interno/MVP/sp3.md)  |
 | Feira de Soluções | 03/12/2026 |     Planejado      |                                          ----                                             |
 
 ---
